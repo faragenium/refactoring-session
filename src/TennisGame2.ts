@@ -19,6 +19,10 @@ export class TennisGame2 implements TennisGame {
     return this.P1point === this.P2point && this.P1point < 4;
   }
 
+  private isDeuceScore(): boolean {
+    return this.P1point === this.P2point && this.P1point >= 3;
+  }
+
   private getEqualizingScore(score: number): string {
     if (score === 0) {
       return 'Love'
@@ -35,9 +39,9 @@ export class TennisGame2 implements TennisGame {
     if (this.isEqualizingScore()) {
       score = this.getEqualizingScore(this.P1point) + "-All";
     }
-    if (this.P1point === this.P2point && this.P1point >= 3)
+    if (this.isDeuceScore()){
       score = 'Deuce';
-
+    }
     if (this.P1point > 0 && this.P2point === 0) {
       if (this.P1point === 1)
         this.P1res = 'Fifteen';
