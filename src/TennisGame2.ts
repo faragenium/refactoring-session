@@ -23,6 +23,10 @@ export class TennisGame2 implements TennisGame {
     return this.P1point === this.P2point && this.P1point >= 3;
   }
 
+  private onePlayerScoresAndOtherDoesnot(): boolean {
+    return this.P1point != this.P2point
+  }
+
   private getEqualizingScore(score: number): string {
     if (score === 0) {
       return 'Love'
@@ -34,6 +38,23 @@ export class TennisGame2 implements TennisGame {
     return ""
   }
 
+  private getPlayerResult(points: number): string {
+    if(points === 1) {
+      return 'Fifteen'
+    } else if (points === 2){
+      return 'Thirty'
+    } else if (points === 3) {
+      return 'Forty'
+    }
+    return 'Love';
+  }
+
+  private getCurrentWinningScore(): string {
+    this.P1res = this.getPlayerResult(this.P1point);
+    this.P2res = this.getPlayerResult(this.P2point);
+    return this.P1res + "-" + this.P2res;
+  }
+
   getScore(): string {
     let score: string = '';
     if (this.isEqualizingScore()) {
@@ -42,27 +63,9 @@ export class TennisGame2 implements TennisGame {
     if (this.isDeuceScore()){
       score = 'Deuce';
     }
-    if (this.P1point > 0 && this.P2point === 0) {
-      if (this.P1point === 1)
-        this.P1res = 'Fifteen';
-      if (this.P1point === 2)
-        this.P1res = 'Thirty';
-      if (this.P1point === 3)
-        this.P1res = 'Forty';
 
-      this.P2res = 'Love';
-      score = this.P1res + '-' + this.P2res;
-    }
-    if (this.P2point > 0 && this.P1point === 0) {
-      if (this.P2point === 1)
-        this.P2res = 'Fifteen';
-      if (this.P2point === 2)
-        this.P2res = 'Thirty';
-      if (this.P2point === 3)
-        this.P2res = 'Forty';
-
-      this.P1res = 'Love';
-      score = this.P1res + '-' + this.P2res;
+    if (this.onePlayerScoresAndOtherDoesnot()) {
+      score = this.getCurrentWinningScore()
     }
 
     if (this.P1point > this.P2point && this.P1point < 4) {
