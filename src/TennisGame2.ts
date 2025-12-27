@@ -27,6 +27,15 @@ export class TennisGame2 implements TennisGame {
     return this.P1point != this.P2point
   }
 
+  private onePlayerAtAdvantage(): boolean {
+    return (this.P1point > this.P2point && this.P2point >= 3) 
+      || this.P2point > this.P1point && this.P1point >= 3
+  }
+
+  private getAdvantageScore(): string {
+    return `Advantage ${this.P1point > this.P2point ? 'player1' : 'player2'}`
+  }
+
   private getEqualizingScore(score: number): string {
     if (score === 0) {
       return 'Love'
@@ -68,12 +77,8 @@ export class TennisGame2 implements TennisGame {
       score = this.getCurrentWinningScore()
     }
 
-    if (this.P1point > this.P2point && this.P2point >= 3) {
-      score = 'Advantage player1';
-    }
-
-    if (this.P2point > this.P1point && this.P1point >= 3) {
-      score = 'Advantage player2';
+    if (this.onePlayerAtAdvantage()) {
+      score = this.getAdvantageScore();
     }
 
     if (this.P1point >= 4 && this.P2point >= 0 && (this.P1point - this.P2point) >= 2) {
