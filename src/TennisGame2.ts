@@ -1,4 +1,4 @@
-import { TennisGame } from './TennisGame';
+import { TennisGame, Score } from './TennisGame';
 
 export class TennisGame2 implements TennisGame {
   P1point: number = 0;
@@ -38,24 +38,24 @@ export class TennisGame2 implements TennisGame {
 
   private getEqualizingScore(score: number): string {
     if (score === 0) {
-      return 'Love'
+      return Score.LOVE
     } else if (score === 1) {
-      return 'Fifteen'
+      return Score.FIFTEEN
     } else if (score === 2) {
-      return 'Thirty'
+      return Score.THIRTY
     }
     return ""
   }
 
   private getPlayerResult(points: number): string {
     if(points === 1) {
-      return 'Fifteen'
+      return Score.FIFTEEN
     } else if (points === 2){
-      return 'Thirty'
+      return Score.THIRTY
     } else if (points === 3) {
-      return 'Forty'
+      return Score.FORTY
     }
-    return 'Love';
+    return Score.LOVE;
   }
 
   private getCurrentWinningScore(): string {
@@ -79,7 +79,7 @@ export class TennisGame2 implements TennisGame {
       score = this.getEqualizingScore(this.P1point) + "-All";
     }
     if (this.isDeuceScore()){
-      score = 'Deuce';
+      score = Score.DEUCE;
     }
 
     if (this.onePlayerScoresAndOtherDoesnot()) {
