@@ -1,4 +1,4 @@
-import { TennisGame } from './TennisGame';
+import { TennisGame, Score } from './TennisGame';
 
 export class TennisGame1 implements TennisGame {
   private m_score1: number = 0;
@@ -11,6 +11,21 @@ export class TennisGame1 implements TennisGame {
     this.player2Name = player2Name;
   }
 
+  private getEqualizingScore(): string {
+    if (this.m_score1 === 0) {
+      return `${Score.LOVE}-${Score.ALL}`
+    } else if (this.m_score1 === 1) {
+      return `${Score.FIFTEEN}-${Score.ALL}`
+    } else if (this.m_score1 === 2) {
+      return `${Score.THIRTY}-${Score.ALL}`
+    }
+    return Score.DEUCE
+  }
+
+  private isEqualizingScore(): boolean {
+    return this.m_score1 === this.m_score2;
+  }
+
   wonPoint(playerName: string): void {
     if (playerName === 'player1')
       this.m_score1 += 1;
@@ -21,22 +36,8 @@ export class TennisGame1 implements TennisGame {
   getScore(): string {
     let score: string = '';
     let tempScore: number = 0;
-    if (this.m_score1 === this.m_score2) {
-      switch (this.m_score1) {
-        case 0:
-          score = 'Love-All';
-          break;
-        case 1:
-          score = 'Fifteen-All';
-          break;
-        case 2:
-          score = 'Thirty-All';
-          break;
-        default:
-          score = 'Deuce';
-          break;
-
-      }
+    if (this.isEqualizingScore()) {
+      score = this.getEqualizingScore()
     }
     else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
       const minusResult: number = this.m_score1 - this.m_score2;
