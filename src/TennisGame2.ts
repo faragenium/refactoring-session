@@ -15,16 +15,25 @@ export class TennisGame2 implements TennisGame {
     this.player2Name = player2Name;
   }
 
+  private isEqualizingScore(): boolean {
+    return this.P1point === this.P2point && this.P1point < 4;
+  }
+
+  private getEqualizingScore(score: number): string {
+    if (score === 0) {
+      return 'Love'
+    } else if (score === 1) {
+      return 'Fifteen'
+    } else if (score === 2) {
+      return 'Thirty'
+    }
+    return ""
+  }
+
   getScore(): string {
     let score: string = '';
-    if (this.P1point === this.P2point && this.P1point < 4) {
-      if (this.P1point === 0)
-        score = 'Love';
-      if (this.P1point === 1)
-        score = 'Fifteen';
-      if (this.P1point === 2)
-        score = 'Thirty';
-      score += '-All';
+    if (this.isEqualizingScore()) {
+      score = this.getEqualizingScore(this.P1point) + "-All";
     }
     if (this.P1point === this.P2point && this.P1point >= 3)
       score = 'Deuce';
