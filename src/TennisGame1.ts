@@ -44,6 +44,25 @@ export class TennisGame1 implements TennisGame {
     return this.getPlayerResult(this.m_score1) + "-" + this.getPlayerResult(this.m_score2);
   }
 
+
+  private onePlayerAtAdvantage(): boolean {
+    return (this.m_score1 > this.m_score2 && this.m_score2 >= 3) 
+      || this.m_score2 > this.m_score1 && this.m_score1 >= 3
+  }
+
+  private getAdvantageScore(): string {
+    return `Advantage ${this.m_score1 > this.m_score2 ? this.player1Name : this.player2Name}`
+  }
+
+  private playerWon(): boolean {
+    return (this.m_score1 >= 4 && this.m_score2 >= 0 && (this.m_score1 - this.m_score2) >= 2)
+      || (this.m_score2 >= 4 && this.m_score1 >= 0 && (this.m_score2 - this.m_score1) >= 2);
+  }
+
+  private getWinningScore(): string {
+    return `Win for ${(this.m_score1 - this.m_score2) >= 2 ? this.player1Name : this.player2Name}`
+  }
+
   wonPoint(playerName: string): void {
     if (playerName === 'player1')
       this.m_score1 += 1;
@@ -53,16 +72,14 @@ export class TennisGame1 implements TennisGame {
 
   getScore(): string {
     let score: string = '';
-    let tempScore: number = 0;
     if (this.isEqualizingScore()) {
       score = this.getEqualizingScore()
     }
-    else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
-      const minusResult: number = this.m_score1 - this.m_score2;
-      if (minusResult === 1) score = 'Advantage player1';
-      else if (minusResult === -1) score = 'Advantage player2';
-      else if (minusResult >= 2) score = 'Win for player1';
-      else score = 'Win for player2';
+    else if (this.playerWon()) {
+      score = this.getWinningScore();
+    }
+    else if (this.onePlayerAtAdvantage()) {
+      score = this.getAdvantageScore()
     }
     else {
       score = this.getCurrentWinningScore()
