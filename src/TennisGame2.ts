@@ -7,8 +7,8 @@ export class TennisGame2 implements TennisGame {
   P1res: string = '';
   P2res: string = '';
 
-  private player1Name: string;
-  private player2Name: string;
+  private player1Name: string = 'player1';
+  private player2Name: string = 'player2';
 
   constructor(player1Name: string, player2Name: string) {
     this.player1Name = player1Name;
@@ -33,7 +33,7 @@ export class TennisGame2 implements TennisGame {
   }
 
   private getAdvantageScore(): string {
-    return `Advantage ${this.P1point > this.P2point ? 'player1' : 'player2'}`
+    return `Advantage ${this.P1point > this.P2point ? this.player1Name : this.player2Name}`
   }
 
   private getEqualizingScore(score: number): string {
@@ -70,7 +70,7 @@ export class TennisGame2 implements TennisGame {
   }
 
   private getWinningScore(): string {
-    return `Win for ${(this.P1point - this.P2point) >= 2 ? 'player1' : 'player2'}`
+    return `Win for ${(this.P1point - this.P2point) >= 2 ? this.player1Name : this.player2Name}`
   }
 
   getScore(): string {
