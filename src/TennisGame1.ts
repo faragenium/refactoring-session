@@ -1,8 +1,8 @@
 import { TennisGame, Score } from './TennisGame';
 
 export class TennisGame1 implements TennisGame {
-  private m_score1: number = 0;
-  private m_score2: number = 0;
+  private player1Score: number = 0;
+  private player2Score: number = 0;
   private player1Name: string;
   private player2Name: string;
 
@@ -12,18 +12,18 @@ export class TennisGame1 implements TennisGame {
   }
 
   private getEqualizingScore(): string {
-    if (this.m_score1 === 0) {
+    if (this.player1Score === 0) {
       return `${Score.LOVE}-${Score.ALL}`
-    } else if (this.m_score1 === 1) {
+    } else if (this.player1Score === 1) {
       return `${Score.FIFTEEN}-${Score.ALL}`
-    } else if (this.m_score1 === 2) {
+    } else if (this.player1Score === 2) {
       return `${Score.THIRTY}-${Score.ALL}`
     }
     return Score.DEUCE
   }
 
   private isEqualizingScore(): boolean {
-    return this.m_score1 === this.m_score2;
+    return this.player1Score === this.player2Score;
   }
 
 
@@ -41,33 +41,33 @@ export class TennisGame1 implements TennisGame {
   }
 
   private getCurrentWinningScore(): string {
-    return this.getPlayerResult(this.m_score1) + "-" + this.getPlayerResult(this.m_score2);
+    return this.getPlayerResult(this.player1Score) + "-" + this.getPlayerResult(this.player2Score);
   }
 
 
   private onePlayerAtAdvantage(): boolean {
-    return (this.m_score1 > this.m_score2 && this.m_score2 >= 3) 
-      || this.m_score2 > this.m_score1 && this.m_score1 >= 3
+    return (this.player1Score > this.player2Score && this.player2Score >= 3) 
+      || this.player2Score > this.player1Score && this.player1Score >= 3
   }
 
   private getAdvantageScore(): string {
-    return `Advantage ${this.m_score1 > this.m_score2 ? this.player1Name : this.player2Name}`
+    return `Advantage ${this.player1Score > this.player2Score ? this.player1Name : this.player2Name}`
   }
 
   private playerWon(): boolean {
-    return (this.m_score1 >= 4 && this.m_score2 >= 0 && (this.m_score1 - this.m_score2) >= 2)
-      || (this.m_score2 >= 4 && this.m_score1 >= 0 && (this.m_score2 - this.m_score1) >= 2);
+    return (this.player1Score >= 4 && this.player2Score >= 0 && (this.player1Score - this.player2Score) >= 2)
+      || (this.player2Score >= 4 && this.player1Score >= 0 && (this.player2Score - this.player1Score) >= 2);
   }
 
   private getWinningScore(): string {
-    return `Win for ${(this.m_score1 - this.m_score2) >= 2 ? this.player1Name : this.player2Name}`
+    return `Win for ${(this.player1Score - this.player2Score) >= 2 ? this.player1Name : this.player2Name}`
   }
 
   wonPoint(playerName: string): void {
-    if (playerName === 'player1')
-      this.m_score1 += 1;
+    if (playerName === this.player1Name)
+      this.player1Score += 1;
     else
-      this.m_score2 += 1;
+      this.player2Score += 1;
   }
 
   getScore(): string {
