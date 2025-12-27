@@ -26,6 +26,24 @@ export class TennisGame1 implements TennisGame {
     return this.m_score1 === this.m_score2;
   }
 
+
+  private getPlayerResult(points: number): string {
+    if(points === 0) {
+      return Score.LOVE
+    } else if(points === 1) {
+      return Score.FIFTEEN
+    } else if (points === 2){
+      return Score.THIRTY
+    } else if (points === 3) {
+      return Score.FORTY
+    }
+    return ""
+  }
+
+  private getCurrentWinningScore(): string {
+    return this.getPlayerResult(this.m_score1) + "-" + this.getPlayerResult(this.m_score2);
+  }
+
   wonPoint(playerName: string): void {
     if (playerName === 'player1')
       this.m_score1 += 1;
@@ -47,24 +65,7 @@ export class TennisGame1 implements TennisGame {
       else score = 'Win for player2';
     }
     else {
-      for (let i = 1; i < 3; i++) {
-        if (i === 1) tempScore = this.m_score1;
-        else { score += '-'; tempScore = this.m_score2; }
-        switch (tempScore) {
-          case 0:
-            score += 'Love';
-            break;
-          case 1:
-            score += 'Fifteen';
-            break;
-          case 2:
-            score += 'Thirty';
-            break;
-          case 3:
-            score += 'Forty';
-            break;
-        }
-      }
+      score = this.getCurrentWinningScore()
     }
     return score;
   }
