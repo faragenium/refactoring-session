@@ -20,12 +20,11 @@ export class GildedRose {
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       const itemName = this.items[i].name
-      if (itemName != 'Aged Brie' && itemName != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (itemName != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1
-          }
-        }
+      if (
+        ['Aged Brie', 'Backstage passes to a TAFKAL80ETC concert', 'Sulfuras, Hand of Ragnaros'].includes(itemName) &&
+        this.items[i].quality
+      ) {
+        this.items[i].quality = this.items[i].quality - 1;
       } else {
         if (this.items[i].quality < 50) {
           this.items[i].quality = this.items[i].quality + 1
